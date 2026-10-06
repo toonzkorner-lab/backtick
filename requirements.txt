@@ -1,0 +1,7 @@
+# Pinned to the versions this release was tested against.
+telethon==1.45.0
+fastapi==0.142.2
+uvicorn==0.54.0
+pydantic==2.13.5
+python-multipart==0.0.32  # required by the /api/upload form endpoint
+pytest==9.1.1  # for tests/; not needed at runtime

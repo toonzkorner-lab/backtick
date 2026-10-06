@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Backtick</title>
+  <link rel="stylesheet" href="/static/vendor/fonts.css" />
+  <link rel="stylesheet" href="/static/vendor/github-dark.min.css" />
+  <link rel="stylesheet" href="/static/app.css" />
+  <script src="/static/vendor/highlight.min.js"></script>
+</head>
+<body>
+  <div id="auth" class="auth-wrap">
+    <form class="auth" id="authForm">
+      <div class="mark">`</div>
+      <h2>Backtick</h2>
+      <p class="lead">Telegram for people who ship code. Sign in with the api_id and api_hash from <a href="https://my.telegram.org" target="_blank" rel="noreferrer">my.telegram.org</a>. Credentials stay on this machine.</p>
+      <label class="field">api_id <input name="api_id" inputmode="numeric" required placeholder="1234567" /></label>
+      <label class="field">api_hash <input name="api_hash" required placeholder="0123456789abcdef..." autocomplete="off" /></label>
+      <label class="field">phone <input name="phone" required placeholder="+15551234567" /></label>
+      <label class="field" id="codeField">login code <input name="code" placeholder="from Telegram" /></label>
+      <label class="field hidden" id="passField">2FA password <input name="password" type="password" /></label>
+      <div class="err" id="authErr"></div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <button class="primary" id="codeBtn" type="button">Send code</button>
+        <button class="ghost" id="signBtn" type="submit">Sign in</button>
+        <button class="ghost" id="demoBtn" type="button">Open demo</button>
+      </div>
+      <p class="hint" style="margin-top:12px;">Demo needs no account. A saved session restores automatically.</p>
+    </form>
+  </div>
+
+  <div id="shell" class="app hidden">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="mark">`</div>
+        <div><h1>Backtick</h1><p>developer client</p></div>
+        <div class="me" id="meLabel"></div>
+      </div>
+      <div class="search"><input id="chatFilter" placeholder="Filter chats" /></div>
+      <div class="filters" id="filters">
+        <button type="button" class="on" data-filter="all">All</button>
+        <button type="button" data-filter="unread">Unread</button>
+        <button type="button" data-filter="bot">Bots</button>
+        <button type="button" data-filter="group">Groups</button>
+        <button type="button" data-filter="channel">Channels</button>
+        <button type="button" data-filter="user">People</button>
+        <button type="button" data-filter="marks">Pins</button>
+      </div>
+      <div class="chats" id="chats"></div>
+    </aside>
+    <main class="thread">
+      <header class="topbar">
+        <div>
+          <h2 id="peerName">Select a chat</h2>
+          <div class="sub" id="peerSub">Ctrl+P palette · Ctrl+Enter sends</div>
+        </div>
+        <div class="tools">
+          <button class="ghost only-mobile" id="chatsToggle" type="button">Chats</button>
+          <button class="ghost only-mobile" id="railToggle" type="button">Panel</button>
+          <button class="ghost" id="searchToggle" type="button">Search</button>
+          <button class="ghost" id="exportBtn" type="button">Export</button>
+          <button class="ghost" id="readBtn" type="button">Mark read</button>
+          <button class="ghost" id="paletteBtn" type="button">Palette</button>
+          <button class="ghost" id="logoutBtn" type="button">Log out</button>
+        </div>
+      </header>
+      <div class="log" id="log"></div>
+      <form class="composer" id="composer">
+        <div class="hidden" id="threadSearch" style="margin-bottom:8px; display:flex; gap:6px; align-items:center;">
+          <input id="threadQuery" placeholder="Search this chat. Prefix /re for regex" />
+          <button class="ghost" type="button" id="runSearch">Find</button>
+          <label class="hint" style="display:flex; gap:4px; align-items:center; white-space:nowrap;"><input type="checkbox" id="searchAll" style="width:auto;" /> everywhere</label>
+        </div>
+        <div class="inserts" id="inserts"></div>
+        <input id="filePick" type="file" class="hidden" />
+        <textarea id="draft" placeholder="Write. Wrap code with ```lang. Ctrl+` fences the selection."></textarea>
+        <div class="row">
+          <div class="hint" id="replyHint"></div>
+          <div style="display:flex; gap:6px;">
+            <button class="ghost" type="button" id="attachBtn">Attach</button>
+            <button class="ghost" type="button" id="clearReply">Clear quote</button>
+            <button class="primary" type="submit" id="sendBtn">Send</button>
+          </div>
+        </div>
+      </form>
+      <footer class="status" id="status">backtick · ready</footer>
+    </main>
+    <aside class="rail">
+      <div class="panel">
+        <div class="tabs" id="tabs">
+          <button class="on" type="button" data-tab="code">Code</button>
+          <button type="button" data-tab="inspect">Inspect</button>
+          <button type="button" data-tab="bots">Bots</button>
+          <button type="button" data-tab="flow">Flow</button>
+          <button type="button" data-tab="snips">Snips</button>
+          <button type="button" data-tab="tools">Tools</button>
+          <button type="button" data-tab="prefs">Settings</button>
+        </div>
+        <h3 id="railTitle">File preview</h3>
+        <p class="hint" id="railHint">Open a code attachment, or pick a tool.</p>
+      </div>
+      <div class="preview" id="preview"></div>
+    </aside>
+  </div>
+
+  <div id="palette" class="palette hidden">
+    <form id="paletteForm">
+      <input id="paletteInput" placeholder="Jump, insert, or run a tool" />
+      <div id="paletteList"></div>
+    </form>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
